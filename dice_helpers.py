@@ -21,9 +21,10 @@ def opencv_skelitonize(img):
 
 def dice_loss(pred, target):
     '''
-    inputs shape  (batch, channel, height, width).
-    calculate dice loss per batch and channel of sample.
-    E.g. if batch shape is [64, 1, 128, 128] -> [64, 1]
+    Calculate dice loss per sample
+    :param pred: (batch, channel, height, width)
+    :param target:
+    :return:
     '''
     smooth = 1.
     iflat = pred.view(*pred.shape[:2], -1) #batch, channel, -1
