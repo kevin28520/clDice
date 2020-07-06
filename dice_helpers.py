@@ -56,19 +56,3 @@ def norm_intersection(center_line, vessel):
     intersection = (clf * vf).sum(-1)
     return (intersection + smooth) / (clf.sum(-1) + smooth)
 
-def soft_cldice_loss(pred, target, target_skeleton=None):
-    '''
-    inputs shape  (batch, channel, height, width).
-    calculate clDice loss
-    Because pred and target at moment of loss calculation will be a torch tensors
-    it is preferable to calculate target_skeleton on the step of batch forming,
-    when it will be in numpy array format by means of opencv
-    '''
-    cl_pred = soft_skeletonize(pred)
-    if target_skeleton is None:
-        target_skeleton = soft_skeletonize(target)
-    iflat = norm_intersection(cl_pred, target)
-    tflat = norm_intersection(target_skeleton, pred)
-    intersection = iflat * tflat
-    return -((2. * intersection) /
-              (iflat + tflat))
